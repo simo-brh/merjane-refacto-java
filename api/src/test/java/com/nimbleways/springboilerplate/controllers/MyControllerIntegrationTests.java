@@ -1,21 +1,24 @@
 package com.nimbleways.springboilerplate.controllers;
 
+import com.nimbleways.springboilerplate.contollers.OrderController;
 import com.nimbleways.springboilerplate.entities.Order;
 import com.nimbleways.springboilerplate.entities.Product;
+import com.nimbleways.springboilerplate.entities.ProductType;
 import com.nimbleways.springboilerplate.repositories.OrderRepository;
 import com.nimbleways.springboilerplate.repositories.ProductRepository;
+import com.nimbleways.springboilerplate.services.OrderService;
+import com.nimbleways.springboilerplate.services.ProductService;
 import com.nimbleways.springboilerplate.services.implementations.NotificationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.Assert.assertEquals;
-
-// import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,7 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 // Specify the controller class you want to test
@@ -32,6 +34,7 @@ import java.util.Set;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class MyControllerIntegrationTests {
+
         @Autowired
         private MockMvc mockMvc;
 
@@ -54,7 +57,7 @@ public class MyControllerIntegrationTests {
             //save order
                 Order order = createOrder(allProducts);
                 productRepository.saveAll(allProducts);
-                order = orderRepository.save(order);
+                orderRepository.save(order);
 
             //process Order
                 mockMvc.perform(post("/orders/{orderId}/processOrder", order.getId())
@@ -101,14 +104,14 @@ public class MyControllerIntegrationTests {
 
         private static Set<Product> createProducts() {
                 Set<Product> products = new HashSet<>();
-                products.add(new Product(null, 15, 30, "NORMAL", "USB Cable", null, null, null));
-                products.add(new Product(null, 10, 0, "NORMAL", "USB Dongle", null, null, null));
-                products.add(new Product(null, 15, 30, "EXPIRABLE", "Butter", LocalDate.now().plusDays(26), null,
+                products.add(new Product(null, 15, 30, ProductType.of("NORMAL"), "USB Cable", null, null, null));
+                products.add(new Product(null, 10, 0, ProductType.of("NORMAL"), "USB Dongle", null, null, null));
+                products.add(new Product(null, 15, 30, ProductType.of("EXPIRABLE"), "Butter", LocalDate.now().plusDays(26), null,
                                 null));
-                products.add(new Product(null, 90, 6, "EXPIRABLE", "Milk", LocalDate.now().minusDays(2), null, null));
-                products.add(new Product(null, 15, 30, "SEASONAL", "Watermelon", null, LocalDate.now().minusDays(2),
+                products.add(new Product(null, 90, 6, ProductType.of("EXPIRABLE"), "Milk", LocalDate.now().minusDays(2), null, null));
+                products.add(new Product(null, 15, 30, ProductType.of("SEASONAL"), "Watermelon", null, LocalDate.now().minusDays(2),
                                 LocalDate.now().plusDays(58)));
-                products.add(new Product(null, 15, 30, "SEASONAL", "Grapes", null, LocalDate.now().plusDays(180),
+                products.add(new Product(null, 15, 30, ProductType.of("SEASONAL"), "Grapes", null, LocalDate.now().plusDays(180),
                                 LocalDate.now().plusDays(240)));
                 return products;
         }
