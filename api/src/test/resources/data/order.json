@@ -1,0 +1,45 @@
+{
+  "id": 1,
+  "items": [
+    {
+      "id": 1,
+      "leadTime": 5,
+      "available": 20,
+      "type": "NORMAL",
+      "name": "Baskets classiques",
+      "expiryDate": null,
+      "seasonStartDate": null,
+      "seasonEndDate": null
+    },
+    {
+      "id": 2,
+      "leadTime": 7,
+      "available": 5,
+      "type": "SEASONAL",
+      "name": "Maillot de bain été 2024",
+      "expiryDate": null,
+      "seasonStartDate": "2024-06-01",
+      "seasonEndDate": "2024-08-31"
+    },
+    {
+      "id": 3,
+      "leadTime": 2,
+      "available": 15,
+      "type": "EXPIRABLE",
+      "name": "Yaourt Bio 500g",
+      "expiryDate": "2025-05-15",
+      "seasonStartDate": null,
+      "seasonEndDate": null
+    },
+    {
+      "id": 4,
+      "leadTime": 1,
+      "available": 0,
+      "type": "EXPIRABLE",
+      "name": "Sandwich Frais",
+      "expiryDate": "2025-04-27",
+      "seasonStartDate": null,
+      "seasonEndDate": null
+    }
+  ]
+}

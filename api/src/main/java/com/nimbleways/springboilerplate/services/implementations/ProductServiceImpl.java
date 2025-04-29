@@ -1,6 +1,7 @@
 package com.nimbleways.springboilerplate.services.implementations;
 
 import com.nimbleways.springboilerplate.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import com.nimbleways.springboilerplate.entities.Product;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
  * Product Service dedicate for business operations (CRUD)
  */
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -82,6 +84,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void processNormalProduct(Product product){
 
+        log.info("Process Normal Product with Id {}", product.getId());
+
         if (product.getAvailable() > 0) {
             this.decreaseAvailability(product);
         } else {
@@ -92,6 +96,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void processSeasonalProduct(Product product) {
+
+        log.info("Process Seasonal Product with Id {}", product.getId());
+
         if (isWithinSeason(product)) {
             if (product.getAvailable() > 0) {
                 this.decreaseAvailability(product);
@@ -106,6 +113,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void processExpirableProduct(Product product) {
+
+        log.info("Process Expirable Product with Id {}", product.getId());
+
         if (product.getAvailable() > 0 && product.getExpiryDate().isAfter(LocalDate.now())) {
             this.decreaseAvailability(product);
         } else {
